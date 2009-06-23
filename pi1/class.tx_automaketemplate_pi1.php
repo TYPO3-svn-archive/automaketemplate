@@ -27,6 +27,7 @@
  * $Id$
  *
  * @author	Kasper Skaarhoj <kasper@typo3.com>
+ * @author	alterNET internet b.v. <support@alternet.nl>
  */
 /**
  * [CLASS/FUNCTION INDEX of SCRIPT]
@@ -293,15 +294,15 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 				$params = $this->htmlParse->get_tag_attributes($firstTag,1);
 
 // ******** THIS IS similar to the code in recursiveBlockSplitting(), but 'elements.' substituted with 'single.': (begin)
-				$allCheck = $this->conf['elements.'][$firstTagName.'.']['all'];
-				$classCheck = $params[0]['class'] && $this->conf['elements.'][$firstTagName.'.']['class.'][$params[0]['class']];
-				$idCheck = $params[0]['id'] && $this->conf['elements.'][$firstTagName.'.']['id.'][$params[0]['id']];
+				$allCheck = $this->conf['single.'][$firstTagName.'.']['all'];
+				$classCheck = $params[0]['class'] && $this->conf['single.'][$firstTagName.'.']['class.'][$params[0]['class']];
+				$idCheck = $params[0]['id'] && $this->conf['single.'][$firstTagName.'.']['id.'][$params[0]['id']];
 				
 					// If any configuration was found, do processing:
 				if ($classCheck || $idCheck || $allCheck)	{
-					if ($allCheck)		$lConf = $this->conf['elements.'][$firstTagName.'.']['all.'];
-					if ($classCheck)	$lConf = $this->conf['elements.'][$firstTagName.'.']['class.'][$params[0]['class'].'.'];
-					if ($idCheck)		$lConf = $this->conf['elements.'][$firstTagName.'.']['id.'][$params[0]['id'].'.'];
+					if ($allCheck)		$lConf = $this->conf['single.'][$firstTagName.'.']['all.'];
+					if ($classCheck)	$lConf = $this->conf['single.'][$firstTagName.'.']['class.'][$params[0]['class'].'.'];
+					if ($idCheck)		$lConf = $this->conf['single.'][$firstTagName.'.']['id.'][$params[0]['id'].'.'];
 
 						// Create markers to insert:
 					$marker=$lConf['subpartMarker'] ? $lConf['subpartMarker'] : (($idCheck||$allCheck)&&$params[0]['id']?$params[0]['id']:$params[0]['class']);
