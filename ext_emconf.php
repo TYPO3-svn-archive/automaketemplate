@@ -1,15 +1,16 @@
 <?php
 
-########################################################################
-# Extension Manager/Repository config file for ext: 'automaketemplate'
-# 
-# Auto generated 29-12-2003 13:17
-# 
-# Manual updates:
-# Only the data in the array - anything else is removed by next write
-########################################################################
+/***************************************************************
+ * Extension Manager/Repository config file for ext "automaketemplate".
+ *
+ * Auto generated 05-06-2013 07:28
+ *
+ * Manual updates:
+ * Only the data in the array - everything else is removed by next
+ * writing. "version" and "dependencies" must not be touched!
+ ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = Array (
+$EM_CONF[$_EXTKEY] = array(
 	'title' => 'Template Auto-parser',
 	'description' => 'Reads an HTML file and all sections which has a certain class or id value set are wrapped in corresponding template subparts. Also relative paths to images, stylesheets etc. are corrected.',
 	'category' => 'plugin',
@@ -25,13 +26,23 @@ $EM_CONF[$_EXTKEY] = Array (
 	'modify_tables' => '',
 	'clearCacheOnLoad' => 1,
 	'lockType' => '',
-	'author' => 'Kasper Skårhøj, alterNET internet b.v.',
-	'author_email' => 'kasper@typo3.com, support@alternet.nl',
-	'author_company' => 'Curby Soft Multimedia, alterNET internet b.v.',
-	'private' => 0,
-	'download_password' => '',
-	'version' => '0.1.0',	// Don't modify this! Managed automatically during upload to repository.
-	'_md5_values_when_last_written' => 'a:15:{s:12:"ext_icon.gif";s:4:"01aa";s:17:"ext_localconf.php";s:4:"8e8b";s:15:"ext_php_api.dat";s:4:"aa1d";s:11:"CVS/Entries";s:4:"4cf3";s:14:"CVS/Repository";s:4:"ba5e";s:8:"CVS/Root";s:4:"be87";s:12:"doc/TODO.txt";s:4:"d41d";s:14:"doc/manual.sxw";s:4:"d691";s:15:"doc/CVS/Entries";s:4:"cae5";s:18:"doc/CVS/Repository";s:4:"6e69";s:12:"doc/CVS/Root";s:4:"be87";s:37:"pi1/class.tx_automaketemplate_pi1.php";s:4:"630e";s:15:"pi1/CVS/Entries";s:4:"7b39";s:18:"pi1/CVS/Repository";s:4:"7691";s:12:"pi1/CVS/Root";s:4:"be87";}',
+	'author' => 'Kasper SkÃ¥rhÃ¸j, alterNET Internet B.V.',
+	'author_email' => 'support@alternet.nl',
+	'author_company' => 'Curby Soft Multimedia, alterNET Internet B.V.',
+	'version' => '0.2.0',
+	'_md5_values_when_last_written' => 'a:9:{s:9:"ChangeLog";s:4:"9ade";s:20:"class.ext_update.php";s:4:"a13b";s:12:"ext_icon.gif";s:4:"b014";s:17:"ext_localconf.php";s:4:"120e";s:15:"ext_php_api.dat";s:4:"aa1d";s:13:"locallang.xml";s:4:"9af3";s:14:"doc/manual.sxw";s:4:"96af";s:12:"doc/TODO.txt";s:4:"d41d";s:37:"pi1/class.tx_automaketemplate_pi1.php";s:4:"4b9e";}',
+	'constraints' => array(
+		'depends' => array(
+			'cms' => '',
+			'typo3' => '4.3.0-6.2.99',
+		),
+		'conflicts' => array(
+		),
+		'suggests' => array(
+		),
+	),
+	'suggests' => array(
+	),
 );
 
 ?>

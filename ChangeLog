@@ -1,6 +1,30 @@
-(add new changes on top of this file)
+04-05-2013 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
 
-09-06-22 Jigal van Hemert | alterNET internet b.v.  <support@alternet.nl>
+	* Compatibility with 6.2
+	* Minimum TYPO3 version set to 4.3 (this is the first version to support autoloading)
+	* Further CGL changes
+	* ereg_replace support removed
 
-	* Fix issue #563,#415,
+11-02-2013 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* CGL applied
+	* refactoring of variable names
+	* modern look to icon
+
+10-10-31 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* Fix issue #15296 : add support for preg_replace (thanks to Arjen Hoekema)
+
+09-11-13 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* Fix issue #1648, #10359, #5399 : 'empty' elements not handled correctly in core
+	* Fix issue #3105, #4460 : hash ident too long
+
+09-08-11 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* Fix issue #4460
+
+09-06-22 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* Fix issue #563,#415, #5367
 	* Manual in new template	
