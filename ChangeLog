@@ -1,3 +1,10 @@
+23-03-2015 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
+
+	* Compatibility with 7.x
+	* Minimum TYPO3 version set to 7.0 (no compatibility6 extension needed to use this)
+	* Cleaned code of unnecessary parts
+	* Labels moved to XLIFF files
+
 04-05-2013 Jigal van Hemert | alterNET Internet BV <support@alternet.nl>
 
 	* Compatibility with 6.2

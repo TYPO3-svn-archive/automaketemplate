@@ -21,14 +21,12 @@
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+use TYPO3\CMS\Backend\Utility\BackendUtility;
+
 /**
  * Update script for the 'automaketemplate' extension.
  *
  * @author	alterNET Internet BV <support@alternet.nl>
- */
-/**
- * [CLASS/FUNCTION INDEX of SCRIPT]
- *
  */
 
 /**
@@ -40,7 +38,7 @@
  */
 class ext_update {
 
-	private $ll = 'LLL:EXT:automaketemplate/locallang.xml:updater.';
+	private $ll = 'LLL:EXT:automaketemplate/locallang.xlf:updater.';
 
 	/**
 	 * Calculates if there is a potential reason for displaying an update warning
@@ -50,18 +48,41 @@ class ext_update {
 		$result = FALSE;
 		$selectFields = '*';
 		$fromTable = 'sys_template';
-		$whereClause = 'config LIKE \'%ereg_replace%\'' . t3lib_BEfunc::BEenableFields('sys_template') .
-			t3lib_BEfunc::deleteClause('sys_template');
-		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($selectFields, $fromTable, $whereClause);
-		if ($GLOBALS['TYPO3_DB']->sql_num_rows($res) > 0) {
+		$whereClause = 'config LIKE \'%ereg_replace%\'' . BackendUtility::BEenableFields('sys_template') .
+			BackendUtility::deleteClause('sys_template');
+
+		$res = $this->getDatabaseConnection()->exec_SELECTquery($selectFields, $fromTable, $whereClause);
+		if ($this->getDatabaseConnection()->sql_num_rows($res) > 0) {
 			$result = TRUE;
 		}
 		return $result;
 	}
 
+	/**
+	 * Main function to generate output
+	 *
+	 * @return string
+	 */
 	public function main() {
-		$out = '<h3>' . $GLOBALS['LANG']->sL($this->ll . 'heading') . '</h3>';
-		$out .= '<p>' . $GLOBALS['LANG']->sL($this->ll . 'message') . '</p>';
+		$out = '<h3>' . $this->getLanguageObject()->sL($this->ll . 'heading') . '</h3>';
+		$out .= '<p>' . $this->getLanguageObject()->sL($this->ll . 'message') . '</p>';
+
 		return $out;
+	}
+
+	/**
+	 * Get database connection object
+	 *
+	 * @return \TYPO3\CMS\Dbal\Database\DatabaseConnection
+	 */
+	protected function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
+	}
+
+	/**
+	 * @return \TYPO3\CMS\Lang\LanguageService
+	 */
+	protected function getLanguageObject() {
+		return $GLOBALS['LANG'];
 	}
 }

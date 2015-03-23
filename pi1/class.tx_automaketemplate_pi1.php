@@ -21,7 +21,9 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-/** 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
+/**
  * Plugin 'Template Auto-parser' for the 'automaketemplate' extension.
  *
  * @author	Kasper Skaarhoj <kasper@typo3.com>
@@ -36,7 +38,7 @@
  * @package TYPO3
  * @subpackage tx_automaketemplate
  */
-class tx_automaketemplate_pi1 extends tslib_pibase {
+class tx_automaketemplate_pi1 extends \TYPO3\CMS\Frontend\Plugin\AbstractPlugin {
 
 	// Default extension plugin variables:
 	// Same as class name
@@ -47,10 +49,14 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 	var $extKey = 'automaketemplate';
 
 	// Others:
-	/** @var t3lib_parsehtml */
+	/** @var \TYPO3\CMS\Core\Html\HtmlParser $htmlParse */
 	protected $htmlParse;
+
+	/** @var array */
 	protected $markersContent;
+
 	protected $bodyTagFound;
+
 	public $elementList;
 
 
@@ -75,7 +81,7 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 		$hash = md5($content . '|' . serialize($hashConf));
 
 		// Looking for a cached version of the parsed template:
-		$hashedContent = $GLOBALS['TSFE']->sys_page->getHash($hash);
+		$hashedContent = $this->getFrontend()->sys_page->getHash($hash);
 		if ($hashedContent) {
 			// Cached version found; setting values from the cache data:
 			$hashedContent = unserialize($hashedContent);
@@ -85,7 +91,7 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 		} else {
 			// Cached version NOT found; parsing the template
 			// Initialize HTML parser object:
-			$this->htmlParse = t3lib_div::makeInstance('t3lib_parsehtml');
+			$this->htmlParse = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Html\HtmlParser::class);
 
 			// Block elements (eg. TABLE, TD, P, DIV)
 			$elements = array();
@@ -135,16 +141,20 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 			}
 
 			// Finding the bodyTag of the HTML source:
-			list(,$this->bodyTagFound) = $this->htmlParse->splitTags('body', $content);
+			list($_, $this->bodyTagFound) = $this->htmlParse->splitTags('body', $content);
 
 			// Finally, save the results in the hash table:
-			$GLOBALS['TSFE']->sys_page->storeHash($hash, serialize(
-				array(
-					'content' => $content,
-					'markersContent' => $this->markersContent,
-					'bodyTagFound' => $this->bodyTagFound
-				)
-			), 'automaketemplate');
+			$this->getFrontend()->sys_page->storeHash(
+				$hash,
+				serialize(
+					array(
+						'content' => $content,
+						'markersContent' => $this->markersContent,
+						'bodyTagFound' => $this->bodyTagFound
+					)
+				),
+				'automaketemplate'
+			);
 		}
 
 		// If the property "getBodyTag" was set, return the bodytag. Else return the processed content:
@@ -183,13 +193,13 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 
 				// Remove tags from source:
 				if ($this->conf['elements.'][$firstTagName . '.']['rmTagSections']) {
-					$elementList = t3lib_div::trimExplode(',', $this->conf['elements.'][$firstTagName . '.']['rmTagSections'], TRUE);
+					$elementList = GeneralUtility::trimExplode(',', $this->conf['elements.'][$firstTagName . '.']['rmTagSections'], TRUE);
 					$removeParts = $this->htmlParse->splitIntoBlock(implode(',', $elementList), $blockContent, 1);
 					$outerParts = $this->htmlParse->getAllParts($removeParts, 0);
 					$blockContent = implode('', $outerParts);
 				}
 				if ($this->conf['elements.'][$firstTagName . '.']['rmSingleTags']) {
-					$elementList = t3lib_div::trimExplode(',', $this->conf['elements.'][$firstTagName . '.']['rmSingleTags'], TRUE);
+					$elementList = GeneralUtility::trimExplode(',', $this->conf['elements.'][$firstTagName . '.']['rmSingleTags'], TRUE);
 					$removeParts = $this->htmlParse->splitTags(implode(',', $elementList), $blockContent);
 					$outerParts = $this->htmlParse->getAllParts($removeParts, 0);
 					$blockContent = implode('', $outerParts);
@@ -368,9 +378,11 @@ class tx_automaketemplate_pi1 extends tslib_pibase {
 		// Implode it all back to a string and return
 		return implode('', $parts);
 	}
-}
 
-if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/automaketemplate/pi1/class.tx_automaketemplate_pi1.php']) {
-	include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/automaketemplate/pi1/class.tx_automaketemplate_pi1.php']);
+	/**
+	 * @return \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 */
+	protected function getFrontend() {
+		return $GLOBALS['TSFE'];
+	}
 }
-?>
